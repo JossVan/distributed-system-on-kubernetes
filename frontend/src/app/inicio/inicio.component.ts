@@ -1,4 +1,6 @@
+import { InformacionService } from './../informacion.service';
 import { Component, OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'app-inicio',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InicioComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit(): void {
+  init : string;
+  constructor(private info: InformacionService) {
+    info.messages.subscribe(msg => {
+      console.log("Response from websocket: " + msg);
+    });
   }
 
+  ngOnInit(): void {
+    this.sendMsg()
+  }
+  private message = {
+    author: "tutorialedge",
+    message: "this is a test message"
+  };
+
+  sendMsg() {
+    console.log("new message from client to websocket: ", this.message);
+    this.info.messages.next(this.message);
+
+  }
 }

@@ -1,3 +1,5 @@
+import { InformacionService } from './informacion.service';
+import { WebsocketService } from './websocket.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -18,7 +20,7 @@ import { InicioComponent } from './inicio/inicio.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [WebsocketService, InformacionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

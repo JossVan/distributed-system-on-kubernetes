@@ -4,13 +4,19 @@
   "description": "proyecto 2",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "author": "Grupo 16",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.2",
-    "websockets": "^0.2.0"
+    "socket.io": "^4.4.0",
+    "websockets": "^0.2.0",
+    "ws": "^8.2.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
