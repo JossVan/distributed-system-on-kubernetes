@@ -18,21 +18,23 @@ const (
 	port = ":50051"
 )
 
-type comentario struct {
-	Nombre     string `json:"nombre"`
-	Correo     string `json:"correo"`
-	Comentario string `json:"comentario"`
+type personas struct {
+	name         string `json:"name"`
+	location     string `json:"location"`
+	age          int    `json:"age"`
+	vaccine_type string `json:"vaccine_type"`
+	n_dose       int    `json:"n_dose"`
 }
 
 type server struct {
 	pb.UnimplementedGetInfoServer
 }
 
-func almacenar_comentario(comentario string) {
+func almacenar_persona(personas string) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	mongoclient, err := mongo.Connect(ctx, options.Client().ApplyURI(""))//Aqui va el link de la db de mongo
+	mongoclient, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://grupo16:grupo16_vacas_2021@34.125.139.194:27017/registro?authSource=admin")) //Aqui va el link de la db de mongo
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -44,12 +46,12 @@ func almacenar_comentario(comentario string) {
 
 	fmt.Println(databases)
 
-	Database := mongoclient.Database("Sopes")
-	Collection := Database.Collection("comentarios")
+	Database := mongoclient.Database("registro")
+	Collection := Database.Collection("personas")
 
 	var bdoc interface{}
 
-	errb := bson.UnmarshalExtJSON([]byte(comentario), true, &bdoc)
+	errb := bson.UnmarshalExtJSON([]byte(personas), true, &bdoc)
 	fmt.Println(errb)
 
 	insertResult, err := Collection.InsertOne(ctx, bdoc)
@@ -60,9 +62,9 @@ func almacenar_comentario(comentario string) {
 }
 
 func (s *server) ReturnInfo(ctx context.Context, in *pb.RequestId) (*pb.ReplyInfo, error) {
-	almacenar_comentario(in.GetId())
+	almacenar_persona(in.GetId())
 	fmt.Printf(">> Data recida: %v\n", in.GetId())
-	return &pb.ReplyInfo{Info: ">> comentario: " + in.GetId()}, nil
+	return &pb.ReplyInfo{Info: ">> persona: " + in.GetId()}, nil
 }
 
 func main() {
