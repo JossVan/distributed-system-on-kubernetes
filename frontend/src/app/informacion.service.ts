@@ -1,10 +1,8 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { WebsocketService } from './websocket.service';
-import { Observable, Subject } from "rxjs";
-import { map } from 'rxjs/operators';
-
-
-const CHAT_URL = "ws://localhost:8080";
+import { HttpClient } from '@angular/common/http';
+import * as io from 'socket.io-client'
 
 export interface Message {
   author: string;
@@ -14,21 +12,30 @@ export interface Message {
 @Injectable({
   providedIn: 'root'
 })
-export class InformacionService {
-  public messages: Subject<Message>;
+export class InformacionService extends WebsocketService {
 
-  constructor(wsService: WebsocketService) {
-    this.messages = <Subject<Message>>wsService.connect(CHAT_URL)
-    .pipe(
-      map(
-        (response: MessageEvent): Message => {
-          let data = JSON.parse(response.data);
-          return {
-            author: data.author,
-            message: data.message
-          };
-        }
-      )
-    )
+  socket;
+  constructor(private http: HttpClient) {
+    super(http)
+    this.socket = io('http://localhost:8080',
+    {
+     secure: true,
+     rejectUnauthorized: false,
+     reconnect: true,
+     transports: ['polling','websocket'] })
+  }
+
+  enviarmensaje(mensaje:string){
+    console.log("Enviando mensaje ", mensaje)
+    this.socket.emit("new-message", mensaje)
+  }
+
+  obtener(): Observable<any>{
+    return new Observable(observer =>{
+      this.socket.on('message-received', (data) =>{
+        observer.next(data)
+      });
+      return ()=>{};
+    });
   }
 }

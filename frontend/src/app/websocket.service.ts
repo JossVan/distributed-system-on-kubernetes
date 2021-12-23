@@ -1,38 +1,43 @@
 import { Injectable } from '@angular/core';
-import * as Rx from 'rxjs';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class WebsocketService {
-  private subject : Rx.Subject<MessageEvent>;
-  constructor() { }
 
-  public connect(url): Rx.Subject<MessageEvent>{
-    if (!this.subject){
-      this.subject = this.create(url);
-      console.log("Successfully Connect "+ url)
-    }
-    return this.subject
+
+  constructor( public _http: HttpClient ) {
   }
 
-  private create(url): Rx.Subject<MessageEvent>{
-    let ws = new WebSocket(url);
-    let observable = Rx.Observable.create(
-      (obs: Rx.Observer<MessageEvent>)=>{
-        ws.onmessage = obs.next.bind(obs);
-        ws.onerror = obs.error.bind(obs)
-        ws.onclose = obs.complete.bind(obs);
-        return ws.close.bind(ws)
-      }
-    )
+  public get( url, token: string ): Observable<any> {
+    const headers = new HttpHeaders( {
+      'Content-Type': 'application/json',
+      'Api-Token': token
+    } );
 
-    let observer = {
-      next : (data:Object)=>{
-        if (ws.readyState === WebSocket.OPEN){
-          ws.send(JSON.stringify(data));
-        }
-      }
-    }
-    return Rx.Subject.create(observer,observable);
+    return this._http.get( url, { headers: headers } );
   }
+
+  public post( url, params, token? ): Observable<any> {
+    const headers = ! ! token ? new HttpHeaders( {
+      'Content-Type': 'application/json',
+      'Api-Token': token
+    } ) : new HttpHeaders( { 'Content-Type': 'application/json' } );
+
+    const body = JSON.stringify( params );
+
+    return this._http.post( url, body, { headers: headers } );
+  }
+
+  public delete( url, token ): Observable<any> {
+    const headers = new HttpHeaders( {
+      'Content-Type': 'application/json',
+      'Api-Token': token
+    } );
+    return this._http.delete( url, { headers: headers } );
+  }
+
 }

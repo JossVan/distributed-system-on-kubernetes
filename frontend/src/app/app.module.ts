@@ -1,8 +1,8 @@
-import { InformacionService } from './informacion.service';
 import { WebsocketService } from './websocket.service';
+import { InformacionService } from './informacion.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -14,13 +14,14 @@ import { InicioComponent } from './inicio/inicio.component';
     AppComponent,
     NavComponent,
     MenuComponent,
-    InicioComponent
+    InicioComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [WebsocketService, InformacionService],
+  providers: [InformacionService,WebsocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

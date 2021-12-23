@@ -10,23 +10,23 @@ import { Component, OnInit } from '@angular/core';
 export class InicioComponent implements OnInit {
 
   init : string;
+  mensaje : string ="raioz";
+  conexion;
   constructor(private info: InformacionService) {
-    info.messages.subscribe(msg => {
-      console.log("Response from websocket: " + msg);
-    });
+
   }
 
   ngOnInit(): void {
-    this.sendMsg()
+    console.log("pasó por inicio")
+    this.conexion = this.info.obtener().subscribe(mensaje=>{
+      console.log("mensaje recibido ",mensaje)
+    })
   }
-  private message = {
-    author: "tutorialedge",
-    message: "this is a test message"
-  };
 
-  sendMsg() {
-    console.log("new message from client to websocket: ", this.message);
-    this.info.messages.next(this.message);
+
+  sendMsg(event: Event) {
+      console.log("Click", this.mensaje);
+      this.info.enviarmensaje(this.mensaje)
 
   }
 }
