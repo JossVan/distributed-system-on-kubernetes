@@ -32,7 +32,7 @@ func almacenar_comentario(comentario string) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	mongoclient, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb+srv://root:sopes1234@cluster0.b75vp.mongodb.net/test"))
+	mongoclient, err := mongo.Connect(ctx, options.Client().ApplyURI(""))//Aqui va el link de la db de mongo
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -61,8 +61,8 @@ func almacenar_comentario(comentario string) {
 
 func (s *server) ReturnInfo(ctx context.Context, in *pb.RequestId) (*pb.ReplyInfo, error) {
 	almacenar_comentario(in.GetId())
-	fmt.Printf(">> Hemos recibido la data del cliente: %v\n", in.GetId())
-	return &pb.ReplyInfo{Info: ">> Hola Cliente, he recibido el comentario: " + in.GetId()}, nil
+	fmt.Printf(">> Data recida: %v\n", in.GetId())
+	return &pb.ReplyInfo{Info: ">> comentario: " + in.GetId()}, nil
 }
 
 func main() {
