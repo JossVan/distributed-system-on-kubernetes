@@ -26,13 +26,13 @@ type Person struct {
 var ctx = context.Background()
 
 // localhost = "127.0.0.1"
-// redis container = "172.17.0.2"
-const ip_address = "172.17.0.2"
+// local redis container = "172.17.0.2"
+const ip_address = "34.125.139.194"
 
 var rdb = redis.NewClient(&redis.Options{
 	Addr:     ip_address + ":6379",
-	Password: "", // no password set
-	DB:       0,  // use default DB
+	Password: "grupo16_vacas_2021",
+	DB:       0, // use default DB,
 })
 
 func main() {

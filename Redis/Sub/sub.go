@@ -7,6 +7,8 @@ import (
 	"log"
 
 	"github.com/go-redis/redis/v8"
+	//"go.mongodb.org/mongo-driver/mongo"
+	//"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 // json que se recibe
@@ -20,12 +22,14 @@ type Person struct {
 
 var ctx = context.Background()
 
-const ip_address = "172.17.0.2"
+// localhost = "127.0.0.1"
+// local redis container = "172.17.0.2"
+const ip_address = "34.125.139.194"
 
 var rdb = redis.NewClient(&redis.Options{
 	Addr:     ip_address + ":6379",
-	Password: "", // no password set
-	DB:       0,  // use default DB
+	Password: "grupo16_vacas_2021",
+	DB:       0, // use default DB
 })
 
 func setValues(person Person) {
@@ -64,6 +68,11 @@ func setValues(person Person) {
 	if err != nil {
 		log.Println("Error al insertar informacion en la lista", err)
 	}
+}
+
+// Insertando datos en mongodb
+func insertIntoMongo() {
+	fmt.Println("prueba")
 }
 
 func main() {

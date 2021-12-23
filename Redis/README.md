@@ -4,17 +4,23 @@ Para la implementacion de la mensageria pub/sub se utilizo Redis como base de da
 
 Para el servidor en golang se utilizaron las siguientes librerias
 
+- Primero inicializar el modulo de la aplicacion
+
+    ```go mod init <nombreModulo>```
+
+    ```go mod tidy```
+
 - Fiber: framework inspirado en Express para crear servidores web en golang
 
     ```go get github.com/gofiber/fiber/v2```
 
 - go-redis: Libreria para utilizar redis en go
 
-    ```go mod init <nombreModulo>```
-
-    ```go mod tidy```
-
     ```go get github.com/go-redis/redis/v8```
+
+- go-mongodb: libreria para utilizar mongo db en go
+
+    ```go get go.mongodb.org/mongo-driver/mongo```
 
 
 Structura JSON que reciben
@@ -37,6 +43,11 @@ listaPersonas (list) : lista de strings que almacena la informacion de las perso
     lpush listaPersonas "string"
     lrange listaPersonas 0 -1
 
+
+sudo docker run -d -p 6379:6379 -v ~/redis:/usr/local/etc/redis --name bds_redisdb_1 redis:latest redis-server /usr/local/etc/redis/redis.conf
+
+sudo docker exec -it redis sh
+redis-cli -h 127.0.0.1 -p 6379 -a grupo16_vacas_2021
 
 ## Docker
 
@@ -65,3 +76,36 @@ Crear imagen
 Crear contenedor
 
 ```docker run --name sub-redis-container -d sub-redis:v1```
+
+## VM de Google
+
+Para crear una instancia de redis con autenticacion se siguieron los siguientes pasos
+
+Crear archivo de configuracion:
+
+```
+mkdir redis
+cd redis
+touch redis.conf
+nano redis.conf
+```
+
+Contenido del archivo redis.conf
+
+```
+bind 0.0.0.0
+requirepass grupo16_vacas_2021
+```
+
+Levantar conetendor:
+
+```
+sudo docker run -d -p 6379:6379 -v ~/redis:/usr/local/etc/redis --name bds_redisdb_1 redis:latest redis-server /usr/local/etc/redis/redis.conf
+```
+
+Entrar a la consola:
+
+```
+sudo docker exec -it redis sh
+redis-cli -h 127.0.0.1 -p 6379 -a grupo16_vacas_2021
+```
