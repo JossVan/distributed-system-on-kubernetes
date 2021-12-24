@@ -1,22 +1,21 @@
-
 package confproto
 
 import (
 	context "context"
 	fmt "fmt"
+	math "math"
+
 	proto "github.com/golang/protobuf/proto"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	math "math"
 )
 
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
-/
-const _ = proto.ProtoPackageIsVersion3 
+const _ = proto.ProtoPackageIsVersion3
 
 type RequestId struct {
 	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -104,7 +103,7 @@ func init() {
 func init() { proto.RegisterFile("configuracion.proto", fileDescriptor_af29c3d97c631adc) }
 
 var fileDescriptor_af29c3d97c631adc = []byte{
-	
+
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x4e, 0xce, 0xcf, 0x4b,
 	0xcb, 0x4c, 0x2f, 0x2d, 0x4a, 0x4c, 0xce, 0xcc, 0xcf, 0xd3, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17,
 	0xe2, 0x04, 0x09, 0x82, 0x99, 0x4a, 0xd2, 0x5c, 0x9c, 0x45, 0xa9, 0x85, 0xa5, 0xa9, 0xc5, 0x25,
@@ -117,11 +116,11 @@ var fileDescriptor_af29c3d97c631adc = []byte{
 	0x00, 0x00,
 }
 
-
 var _ context.Context
 var _ grpc.ClientConn
 
 const _ = grpc.SupportPackageIsVersion4
+
 type GetInfoClient interface {
 	ReturnInfo(ctx context.Context, in *RequestId, opts ...grpc.CallOption) (*ReplyInfo, error)
 }
@@ -143,11 +142,9 @@ func (c *getInfoClient) ReturnInfo(ctx context.Context, in *RequestId, opts ...g
 	return out, nil
 }
 
-
 type GetInfoServer interface {
 	ReturnInfo(context.Context, *RequestId) (*ReplyInfo, error)
 }
-
 
 type UnimplementedGetInfoServer struct {
 }
