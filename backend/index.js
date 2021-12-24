@@ -1,9 +1,11 @@
+'use strict';
 const express = require('express');
 const app = express();
 const path = require('path');
-
 const morgan = require('morgan');
-const ios =require('socket.io') 
+const ios =require('socket.io');
+const db = require("./config/db")
+
 const io = new ios.Server({
     allowEIO3: true,
     cors: {
@@ -11,6 +13,8 @@ const io = new ios.Server({
         credentials: true
     },
 });
+
+
 const port = process.env.PORT || 8080;
 
 // 1. Morgan middleware for logging
@@ -31,6 +35,7 @@ io.on('connection', (socket) => {
     io.emit('message-received', {
       message: data
     });
+
   });
 
   socket.on('disconnect', () => {
@@ -41,8 +46,9 @@ io.on('connection', (socket) => {
     });
   });
 });
-
+console.log("buenas")
 // 7. Run the server
 io.listen(port, () => {
   console.log('Servidor activo en puerto: %d', port);
 });
+
