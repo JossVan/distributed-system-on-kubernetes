@@ -9,7 +9,7 @@ import (
 	pb "servergrpc/proto-grpc"
 	"time"
 
-	"github.com/go-redis/redis"
+	"github.com/go-redis/redis/v8"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -24,9 +24,11 @@ const (
 // local redis container = "172.17.0.2"
 const ip_address = "34.125.139.194"
 
+var contexto = context.Background()
+
 var rdb = redis.NewClient(&redis.Options{
 	Addr:     ip_address + ":6379",
-	Password: "",
+	Password: "grupo16_vacas_2021",
 	DB:       0, // use default DB
 })
 
@@ -56,7 +58,7 @@ func setValues(person string) {
 	} else {
 		key = "rango1"
 	}
-	_, err := rdb.Incr(key).Result()
+	_, err := rdb.Incr(contexto, key).Result()
 	if err != nil {
 		log.Println("Error al aumentar contador ", key)
 	}
@@ -66,8 +68,8 @@ func setValues(person string) {
 		y para obtener los ultimos 5
 		lrange lista 0 4
 	*/
-	data, _ := json.Marshal(person)
-	_, err = rdb.LPush("listaPersonas", data).Result()
+	data, _ := json.Marshal(persona)
+	_, err = rdb.LPush(contexto, "listaPersonas", data).Result()
 	if err != nil {
 		log.Println("Error al insertar informacion en la lista", err)
 	}
