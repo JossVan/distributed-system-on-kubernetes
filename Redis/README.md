@@ -57,7 +57,7 @@ Imagen distroless de go para minimizar el tamaño de la imagen
 
 Crear imagen
 
-```docker build -t pub-redis:<tag> .```
+```docker build -t redis-pub:<tag> .```
 
 Crear contenedor
 
@@ -79,6 +79,8 @@ Crear contenedor
 
 ## VM de Google
 
+### Redis
+
 Para crear una instancia de redis con autenticacion se siguieron los siguientes pasos
 
 Crear archivo de configuracion:
@@ -97,7 +99,7 @@ bind 0.0.0.0
 requirepass grupo16_vacas_2021
 ```
 
-Levantar conetendor:
+Levantar contenedor:
 
 ```
 sudo docker run -d -p 6379:6379 -v ~/redis:/usr/local/etc/redis --name bds_redisdb_1 redis:latest redis-server /usr/local/etc/redis/redis.conf
@@ -106,6 +108,21 @@ sudo docker run -d -p 6379:6379 -v ~/redis:/usr/local/etc/redis --name bds_redis
 Entrar a la consola:
 
 ```
-sudo docker exec -it redis sh
+sudo docker exec -it bds_redisdb_1 sh
 redis-cli -h 127.0.0.1 -p 6379 -a grupo16_vacas_2021
+```
+
+### MongoDB
+
+Levantar el contenedor de mongo con contrasena
+
+```
+docker run -d -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=grupo16 -e MONGO_INITDB_ROOT_PASSWORD=grupo16_vacas_2021 --name mongodb mongo:latest
+```
+
+Entrar al contenedor de mongodb
+
+```
+sudo docker exec -it mongodb bash
+mongo mongodb://grupo16:grupo16_vacas_2021@localhost:27017
 ```

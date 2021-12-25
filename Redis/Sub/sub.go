@@ -5,10 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/go-redis/redis/v8"
-	//"go.mongodb.org/mongo-driver/mongo"
-	//"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 // json que se recibe
@@ -71,8 +73,35 @@ func setValues(person Person) {
 }
 
 // Insertando datos en mongodb
-func insertIntoMongo() {
-	fmt.Println("prueba")
+func almacenar_persona(personas string) {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	mongoclient, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://grupo16:grupo16_vacas_2021@34.125.139.194:27017/registro?authSource=admin")) //Aqui va el link de la db de mongo
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	databases, err := mongoclient.ListDatabaseNames(ctx, bson.M{})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("database", databases)
+
+	Database := mongoclient.Database("registro")
+	Collection := Database.Collection("personas")
+
+	var bdoc interface{}
+
+	errb := bson.UnmarshalExtJSON([]byte(personas), true, &bdoc)
+	fmt.Println(errb)
+
+	insertResult, err := Collection.InsertOne(ctx, bdoc)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("result: ", insertResult)
 }
 
 func main() {
@@ -92,8 +121,12 @@ func main() {
 		}
 		// escribir en la base de datos los valores necesarios para los reportes
 		setValues(person)
-		// el struct que se recibe, se envia directamente a mongodb, como????
-
+		// el struct que se recibe, se envia directamente a mongodb
+		data, err := json.Marshal(person)
+		if err != nil {
+			log.Println("Error en parsear a string ")
+		}
+		almacenar_persona(string(data))
 		fmt.Println("Mensaje recibido del canal " + mensaje.Channel)
 		fmt.Printf("%+v\n\n", person)
 	}
