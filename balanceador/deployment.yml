@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-dummy-deploy
+  namespace: project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-dummy
+  template:
+    metadata:
+      labels:
+        app: api-dummy
+    spec:
+      containers:
+        - name: api-dummy-container
+          image: gcr.io/sopes1proyecto2-313200/api-dummy
+          ports:
+            - containerPort: 8200
