@@ -20,7 +20,6 @@ const personSchema = new mongoose.Schema({
 
 let Person = mongoose.model('personas', personSchema)
 
-
 var Exported = {
     // 1. recopilacion de datos almacenados en mongo
     consulta1: async function(){

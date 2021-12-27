@@ -6,8 +6,6 @@ const path = require('path');
 const morgan = require('morgan');
 const cors = require('cors')
 
-//const redisClient = require('./config/redisdb');
-//require('./config/redisdb');
 const consultas = require('./config/consultas');
 
 app.use(cors())
@@ -19,7 +17,6 @@ const ios = require('socket.io')(http, {
 });
 
 const port = process.env.PORT || 8080;
-
 
 // 1. Morgan middleware for logging
 app.use(morgan('dev'));
@@ -78,16 +75,9 @@ ios.on('connection', (socket) => {
   }, 3000);
 
 });
-//console.log("buenas")
 
 
 // 7. Run the server
 http.listen(port, () => {
   console.log('Servidor activo en puerto: %d', port)
 })
-
-/*
-io.listen(port, () => {
-  console.log('Servidor activo en puerto: %d', port);
-});
-*/
