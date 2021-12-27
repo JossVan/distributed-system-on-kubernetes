@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { WebsocketService } from '../services/websocket.service';
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(private websocketService: WebsocketService) { }
 
   ngOnInit(): void {
+  }
+
+  changeState(tipo:Number){
+    //console.log(tipo)
+    this.websocketService.changeState(tipo)
   }
 
 }
