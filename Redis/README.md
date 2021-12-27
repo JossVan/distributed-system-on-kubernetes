@@ -75,11 +75,11 @@ Ver consola
 
 Crear imagen
 
-```docker build -t sub-redis:<tag> .```
+```docker build -t redis-sub:<tag> .```
 
 Crear contenedor
 
-```docker run --name sub-redis-container -d sub-redis:v1```
+```docker run --name sub-redis-container -d redis-sub:v1```
 
 ## VM de Google
 

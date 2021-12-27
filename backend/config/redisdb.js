@@ -2,7 +2,7 @@ const redis = require('redis');
 
 const redisClient = redis.createClient({
     socket: {
-        host: '34.125.139.194',
+        host: 'www.grupo16-proyecto2-vacas-2021.tk',
         port: 6379
     },
     password: 'grupo16_vacas_2021',

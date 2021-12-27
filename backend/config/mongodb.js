@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const url = `mongodb://grupo16:grupo16_vacas_2021@34.125.139.194:27017/registro?authSource=admin`
+const url = `mongodb://grupo16:grupo16_vacas_2021@www.grupo16-proyecto2-vacas-2021.tk:27017/registro?authSource=admin`
 
 mongoose.connect(url, {
     keepAlive:true,
