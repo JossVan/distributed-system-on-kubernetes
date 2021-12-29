@@ -1,5 +1,3 @@
-import { WebsocketService } from './websocket.service';
-import { InformacionService } from './informacion.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -49,7 +47,7 @@ const config: SocketIoConfig = { url:"www.proyecto2-vacas-2021g16.tk:8080", opti
     MatListModule,
     NgxChartsModule
   ],
-  providers: [InformacionService,WebsocketService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
