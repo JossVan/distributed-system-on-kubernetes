@@ -1,6 +1,8 @@
+import { WebsocketService } from './websocket.service';
+import { InformacionService } from './informacion.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -47,7 +49,7 @@ const config: SocketIoConfig = { url:"http://localhost:8080", options: {}}
     MatListModule,
     NgxChartsModule
   ],
-  providers: [],
+  providers: [InformacionService,WebsocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
