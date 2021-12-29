@@ -1,0 +1,23 @@
+version : '3.3'
+networks:
+ default:
+  external:
+   name: sopes1
+services:
+ mongodb:
+  image: mongo
+  environment:
+   - MONGO_INITDB_DATABASE=registro
+   - MONGO_INITDB_ROOT_USERNAME=grupo16
+   - MONGO_INITDB_ROOT_PASSWORD=grupo16_vacas_2021
+  volumes:
+   - ./mongo-volume:/data/db
+  ports:
+   - 27017:27017
+ redisdb:
+  image: redis
+  environment:
+   - REDIS_PASSWORD=grupo16_vacas_2021
+   - REDIS_USERNAME=grupo16
+  ports:
+   - 6379:6379

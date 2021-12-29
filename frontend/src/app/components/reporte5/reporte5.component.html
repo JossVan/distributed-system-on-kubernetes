@@ -1,0 +1,8 @@
+<!-- Las últimas 5 personas vacunadas almacenadas en Redis -->
+<div class="mx-auto col-8 mt-3">
+    <h1 class="text-center">Ultimas 5 personas almacenadas en Redis</h1>
+    <mat-nav-list>
+        <app-persona *ngFor="let persona of listaPersonas" [persona]="persona"></app-persona>
+    </mat-nav-list>
+    
+</div>
