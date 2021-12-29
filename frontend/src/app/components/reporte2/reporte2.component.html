@@ -1,0 +1,9 @@
+<!-- Top 3 de áreas con mayor vacunados con esquema completo en MongoDB -->
+
+<div class="mx-auto col-8 mt-3">
+    <h1 class="text-center">Top 3 areas con mas vacunados (esquema completo)</h1>
+    <mat-nav-list>
+        <app-location *ngFor="let location of listaLocations" [location]="location"></app-location>
+    </mat-nav-list>
+    
+</div>

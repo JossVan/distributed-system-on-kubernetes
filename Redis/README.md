@@ -44,10 +44,14 @@ listaPersonas (list) : lista de strings que almacena la informacion de las perso
     lrange listaPersonas 0 -1
 
 
-sudo docker run -d -p 6379:6379 -v ~/redis:/usr/local/etc/redis --name bds_redisdb_1 redis:latest redis-server /usr/local/etc/redis/redis.conf
+```
+sudo docker run -d -p 6379:6379 -v ~/redis:/usr/local/etc/redis --name bds_redisdb_1 redis:latest redis-server /usr/local/etc/redis/redis.conf 
+```
 
+```
 sudo docker exec -it redis sh
 redis-cli -h 127.0.0.1 -p 6379 -a grupo16_vacas_2021
+```
 
 ## Docker
 
@@ -71,11 +75,11 @@ Ver consola
 
 Crear imagen
 
-```docker build -t sub-redis:<tag> .```
+```docker build -t redis-sub:<tag> .```
 
 Crear contenedor
 
-```docker run --name sub-redis-container -d sub-redis:v1```
+```docker run --name sub-redis-container -d redis-sub:v1```
 
 ## VM de Google
 

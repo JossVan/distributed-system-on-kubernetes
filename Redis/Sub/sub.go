@@ -25,8 +25,7 @@ type Person struct {
 var ctx = context.Background()
 
 // localhost = "127.0.0.1"
-// local redis container = "172.17.0.2"
-const ip_address = "34.125.139.194"
+const ip_address = "www.grupo16-proyecto2-vacas-2021.tk"
 
 var rdb = redis.NewClient(&redis.Options{
 	Addr:     ip_address + ":6379",
@@ -77,7 +76,7 @@ func almacenar_persona(personas string) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	mongoclient, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://grupo16:grupo16_vacas_2021@34.125.139.194:27017/registro?authSource=admin")) //Aqui va el link de la db de mongo
+	mongoclient, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://grupo16:grupo16_vacas_2021@www.grupo16-proyecto2-vacas-2021.tk:27017/registro?authSource=admin")) //Aqui va el link de la db de mongo
 	if err != nil {
 		log.Fatal(err)
 	}

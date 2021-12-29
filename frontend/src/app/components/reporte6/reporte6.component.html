@@ -1,0 +1,23 @@
+<!-- Gráfico de barras de rango de edad de los vacunados en Redis -->
+
+<div class="mx-auto col-8 mt-3">
+    <h1 class="text-center">Total de vacunados por edades</h1>
+    
+    <div class="mt-4">
+        <ngx-charts-bar-vertical
+        [view]="view"
+        scheme="flame"
+        [results]="single"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        (select)="onSelect($event)">
+        </ngx-charts-bar-vertical>
+    </div>
+    
+</div>

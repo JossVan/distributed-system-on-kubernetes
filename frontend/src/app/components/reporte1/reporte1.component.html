@@ -1,0 +1,8 @@
+<!-- COMPONENTE DE REPORTE DE DATOS ALMACENADOS EN MONGODB -->
+<div class="mx-auto col-8 mt-3">
+    <h1 class="text-center">Recopilacion de Datos</h1>
+    <mat-nav-list>
+        <app-persona *ngFor="let persona of listaPersonas" [persona]="persona"></app-persona>
+    </mat-nav-list>
+    
+</div>

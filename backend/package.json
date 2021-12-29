@@ -16,11 +16,6 @@
     "morgan": "^1.10.0",
     "redis": "^4.0.1",
     "socket.io": "^4.4.0",
-    "socket.io-client": "^4.4.0",
-    "websockets": "^0.2.0",
-    "ws": "^8.2.3"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.15"
+    "websockets": "^0.2.0"
   }
 }

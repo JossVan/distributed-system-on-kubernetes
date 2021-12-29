@@ -4,7 +4,7 @@
           <li class="nav-header">
               <div class="dropdown profile-element">
                   <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                      <span class="block m-t-xs font-bold">Estadísticas de vacunados COVID-19</span>
+                      <span class="block m-t-xs font-bold">Estadísticas de Vacunados COVID-19</span>
                       <span class="text-muted text-xs block">Administrador</span>
                   </a>
               </div>
@@ -13,22 +13,22 @@
           <li>
               <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
               <ul class="nav nav-second-level collapse">
-                  <li><a [routerLink]="['/principal']"> Recopilación de datos </a></li>
-                  <li><a [routerLink]="['/procesos']">Top de áreas</a></li>
-                  <li><a [routerLink]="['/arbolprocesos']">Últimas personas vacunadas</a></li>
+                  <li><a (click)="changeState(1)"> Recopilación de datos </a></li>
+                  <li><a (click)="changeState(2)">Top de áreas</a></li>
+                  <li><a (click)="changeState(5)">Últimas personas vacunadas</a></li>
               </ul>
           </li>
 
           <li class="active">
               <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Gráficos</span><span class="fa arrow"></span></a>
               <ul class="nav nav-second-level">
-                  <li class="active"><a [routerLink]="['/graphram']">% vacunados por dosis</a></li>
+                  <li class="active"><a (click)="changeState(3)">% vacunados una dosis</a></li>
               </ul>
               <ul class="nav nav-second-level">
-                <li class="active"><a [routerLink]="['/graphcpu']">% vacunados esquema completo</a></li>
+                <li class="active"><a (click)="changeState(4)">% vacunados esquema completo</a></li>
             </ul>
             <ul class="nav nav-second-level">
-              <li class="active"><a [routerLink]="['/graphcpu']">Rangos de edad</a></li>
+              <li class="active"><a (click)="changeState(6)">Rangos de edad</a></li>
           </ul>
           </li>
 
