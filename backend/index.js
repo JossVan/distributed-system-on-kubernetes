@@ -12,7 +12,7 @@ app.use(cors())
 
 const ios = require('socket.io')(http, {
   cors: {
-    origins: ["http://localhost:4200"] //ruta del frontend
+    origins: ["www.proyecto2-vacas-2021g16.tk:4200"] //ruta del frontend
   }
 });
 
