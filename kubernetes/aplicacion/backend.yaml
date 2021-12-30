@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: frontend
-  name: frontend
+    app: backend
+  name: backend
   namespace: proyect
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: frontend
+      app: backend
   template:
     metadata:
       labels:
-        app: frontend
+        app: backend
     spec:
       containers:
-      - image: jossvan/aplicacion
+      - image: jossvan/websocket
         imagePullPolicy: Always
-        name: frontend
+        name: backend
