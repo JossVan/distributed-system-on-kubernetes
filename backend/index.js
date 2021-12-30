@@ -5,14 +5,14 @@ const http = require("http").Server(app)
 const path = require('path');
 const morgan = require('morgan');
 const cors = require('cors')
-
+const config = require('./config.js');
 const consultas = require('./config/consultas');
 
 app.use(cors())
 
 const ios = require('socket.io')(http, {
   cors: {
-    origins: ["www.proyecto2-vacas-2021g16.tk:4200"] //ruta del frontend
+    origins: [config.HOST+":4200"] //ruta del frontend
   }
 });
 
