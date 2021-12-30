@@ -1,0 +1,42 @@
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-pub
+  namespace: proyect
+  labels:
+    app: redis-pub
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: redis-pub
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        app: redis-pub
+    spec:
+      containers:
+      - name: redis-pub-container
+        image: cifgt3/grupo16-redis-pub:v1
+        ports:
+        - containerPort: 3000
+---
+# Service tipo ClusterIp
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-pub-service
+  namespace: proyect
+  labels:
+    app: redis-pub
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3000 # escuchando internamente en el cluster
+      targetPort: 3000
+      protocol: TCP
+  selector:
+    app: redis-pub
