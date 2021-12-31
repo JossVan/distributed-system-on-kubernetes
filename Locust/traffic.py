@@ -55,4 +55,4 @@ class MessageTraffic(HttpUser):
 
     @task
     def GetMessages(self):
-        self.client.get("/")
+        self.client.get("load.grupo16-proyecto2-vacas-2021.tk")

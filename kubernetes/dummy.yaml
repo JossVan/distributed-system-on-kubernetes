@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dummy
+  name: dummy
+  namespace: proyect
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dummy
+  template:
+    metadata:
+      labels:
+        app: dummy
+    spec:
+      containers:
+      - image: jossvan/grpcclient
+        imagePullPolicy: Always
+        name: dummy
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: dummy
+  name: dummy
+  namespace: proyect
+spec:
+  ports:
+  - port: 8000
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: dummy
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dummy-ingress
+  namespace: proyect
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header l5d-dst-override $service_name.$namespace.svc.cluster.local:$service_port;
+      grpc_set_header l5d-dst-override $service_name.$namespace.svc.cluster.local:$service_port;
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: load.grupo16-proyecto2-vacas-2021.tk
+      http:
+        paths:
+          - backend:
+              service:
+                name: dummy
+                port: 
+                  number: 8000
+            path: /
+            pathType: Prefix

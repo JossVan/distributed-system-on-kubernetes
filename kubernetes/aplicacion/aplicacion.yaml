@@ -1,10 +1,11 @@
+# Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: frontend
   name: frontend
   namespace: proyect
+  labels:
+    app: frontend
 spec:
   replicas: 2
   selector:
@@ -12,10 +13,31 @@ spec:
       app: frontend
   template:
     metadata:
+      annotations:
+        linkerd.io/inject: enabled
       labels:
         app: frontend
     spec:
       containers:
-      - image: jossvan/aplicacion
-        imagePullPolicy: Always
-        name: frontend
+      - name: frontend
+        image: jossvan/frontend
+        ports:
+        - containerPort: 4200
+
+---
+# Service tipo ClusterIp
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: proyect
+  labels:
+    app: frontend
+spec:
+  type: ClusterIP
+  ports:
+    - port: 4200 
+      targetPort: 4200
+      protocol: TCP
+  selector:
+    app: frontend

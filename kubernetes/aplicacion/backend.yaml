@@ -1,10 +1,11 @@
+# Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: backend
   name: backend
   namespace: proyect
+  labels:
+    app: backend
 spec:
   replicas: 2
   selector:
@@ -12,10 +13,31 @@ spec:
       app: backend
   template:
     metadata:
+      annotations:
+        linkerd.io/inject: enabled
       labels:
         app: backend
     spec:
       containers:
-      - image: jossvan/websocket
-        imagePullPolicy: Always
-        name: backend
+      - name: backend
+        image: jossvan/backend
+        ports:
+        - containerPort: 8080
+
+---
+# Service tipo ClusterIp
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  namespace: proyect
+  labels:
+    app: backend
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080 
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: backend
