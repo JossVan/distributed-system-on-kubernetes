@@ -12,4 +12,6 @@ COPY . .
 
 RUN go build -o /Pub
 
+EXPOSE 8000
+
 CMD [ "/Pub" ]

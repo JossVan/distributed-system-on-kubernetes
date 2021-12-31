@@ -37,12 +37,12 @@ var rdb = redis.NewClient(&redis.Options{
 func main() {
 	app := fiber.New()
 
-	app.Get("/", func(c *fiber.Ctx) error {
+	app.Get("/info", func(c *fiber.Ctx) error {
 		return c.SendString("Servidor Pub de Redis")
 	})
 
 	// publication message
-	app.Post("/pub", func(c *fiber.Ctx) error {
+	app.Post("/", func(c *fiber.Ctx) error {
 		person := new(Person)
 
 		if err := c.BodyParser(person); err != nil {
@@ -65,5 +65,5 @@ func main() {
 		return c.SendStatus(200)
 	})
 
-	app.Listen(":3000")
+	app.Listen(":8000")
 }

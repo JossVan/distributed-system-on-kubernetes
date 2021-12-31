@@ -20,9 +20,9 @@ spec:
     spec:
       containers:
       - name: redis-pub-container
-        image: cifgt3/grupo16-redis-pub:v3
+        image: cifgt3/grupo16-redis-pub:v4
         ports:
-        - containerPort: 3000
+        - containerPort: 8000
 ---
 # Service tipo ClusterIp
 apiVersion: v1
@@ -35,8 +35,8 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: 3000 # escuchando internamente en el cluster
-      targetPort: 3000
+    - port: 8000 # escuchando internamente en el cluster
+      targetPort: 8000
       protocol: TCP
   selector:
     app: redis-pub
