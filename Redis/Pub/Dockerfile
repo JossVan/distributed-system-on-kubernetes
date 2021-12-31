@@ -1,16 +1,15 @@
-FROM golang:latest as build-env
+FROM golang:1.16-alpine
 
-WORKDIR /go/src/app
-COPY *.go .
+RUN apk update && apk add bash && apk add iputils
 
-RUN go mod init
-RUN go get -d -v ./...
-RUN go vet -v
-RUN go test -v
+WORKDIR /app
 
-RUN CGO_ENABLED=0 go build -o /go/bin/app
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
 
-FROM gcr.io/distroless/static
+COPY . .
 
-COPY --from=build-env /go/bin/app /
-CMD ["/app"]
+RUN go build -o /Pub
+
+CMD [ "/Pub" ]

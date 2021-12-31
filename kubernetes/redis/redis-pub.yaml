@@ -7,7 +7,7 @@ metadata:
   labels:
     app: redis-pub
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: redis-pub
@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: redis-pub-container
-        image: cifgt3/grupo16-redis-pub:v1
+        image: cifgt3/grupo16-redis-pub:v3
         ports:
         - containerPort: 3000
 ---
