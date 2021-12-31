@@ -1,19 +1,20 @@
 'use strict';
 const express = require('express');
 const app = express();
+const http = require("http").Server(app)
 const path = require('path');
 const morgan = require('morgan');
-const ios =require('socket.io');
-const db = require("./config/db")
+const cors = require('cors')
 
-const io = new ios.Server({
-    allowEIO3: true,
-    cors: {
-        origin : true,
-        credentials: true
-    },
+const consultas = require('./config/consultas');
+
+app.use(cors())
+
+const ios = require('socket.io')(http, {
+  cors: {
+    origins: ["http://localhost:4200"] //ruta del frontend
+  }
 });
-
 
 const port = process.env.PORT || 8080;
 
@@ -22,33 +23,61 @@ app.use(morgan('dev'));
 
 // 2. Express static index.html file
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  //res.sendFile(path.join(__dirname, 'index.html'));
+  res.send("<h1>Server</h1>")
 });
 
 // 6. Socket.io configuration
-io.on('connection', (socket) => {
-  console.log('Dispositivo conectado');
+ios.on('connection', (socket) => {
+  console.log('Socket conectado');
+  
+  // consulta 1
+  setInterval(async() => {
+    consultas.consulta1().then( val => {
+      socket.emit('result1', val)
+    })
+  }, 3000);
 
-  socket.on('new-message', (data) => {
-    console.log('Message has been received!', data);
+  // consulta 2
+  setInterval(async() => {
+    consultas.consulta2().then(val => {
+      socket.emit('result2', val)
+    })
+  }, 3000);
 
-    io.emit('message-received', {
-      message: data
-    });
+  // consulta 3
+  setInterval(async() => {
+    consultas.consulta3().then(val => {
+      socket.emit('result3', val)
+    })
+  }, 3000);
 
-  });
+  // consulta 4
+  setInterval(async() => {
+    consultas.consulta4().then(val => {
+      socket.emit('result4', val)
+    })
+  }, 3000);
 
-  socket.on('disconnect', () => {
-    console.log('Dispositivo desconectado');
+  // consulta 5
+  setInterval(async() => {
+    consultas.consulta5().then(val=>{
+      socket.emit('result5', val)
+    })
+  }, 3000);
 
-    socket.emit('user-disconnected', () => {
+  // consulta 6
+  setInterval(async() => {
+    consultas.consulta6().then(val=>{
+      //console.log(val)
+      socket.emit('result6', val)
+    })
+  }, 3000);
 
-    });
-  });
 });
-console.log("buenas")
+
+
 // 7. Run the server
-io.listen(port, () => {
-  console.log('Servidor activo en puerto: %d', port);
-});
-
+http.listen(port, () => {
+  console.log('Servidor activo en puerto: %d', port)
+})

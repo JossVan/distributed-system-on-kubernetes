@@ -1,0 +1,24 @@
+<!-- Gráfico circular del porcentaje de vacunados, esquema completo, por 
+departamentos, etc., en MongoDB -->
+
+<div class="mx-auto col-8 mt-3">
+    <h1 class="text-center">Habitantes vacunados por esquema completo (por departamentos)</h1>
+    
+    <div class="mt-4">
+        <ngx-charts-pie-chart
+        [view]="view"
+        scheme="forest"
+        [results]="single"
+        [gradient]="gradient"
+        [legend]="showLegend"
+        [legendPosition]="legendPosition"
+        [labels]="showLabels"
+        [doughnut]="isDoughnut"
+        (select)="onSelect($event)"
+        (activate)="onActivate($event)"
+        (deactivate)="onDeactivate($event)"
+        >
+        </ngx-charts-pie-chart>
+    </div>
+    
+</div>
