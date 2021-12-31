@@ -112,7 +112,7 @@ func main() {
 	for {
 		mensaje, err := subscriber.ReceiveMessage(ctx)
 		if err != nil {
-			log.Println("Error al recibir mensaje")
+			log.Println("Error al recibir mensaje", err)
 		}
 
 		if err := json.Unmarshal([]byte(mensaje.Payload), &person); err != nil {
