@@ -40,8 +40,8 @@ func publishJSON(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println(data)
 
-	url1 := "http://localhost:8000"			//gRPC
-	url2 := "http://127.0.0.1:3000/pub"		//Redis
+	url1 := "grpcclient-service:8000"			//gRPC
+	url2 := "redis-pub-service:3000/pub"		//Redis
 	url := ""								//Defecto
 
 	rand.Seed(time.Now().UnixNano())
