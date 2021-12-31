@@ -1,0 +1,42 @@
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-server
+  namespace: proyect
+  labels:
+    app: grpc-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: grpc-server
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        app: grpc-server
+    spec:
+      containers:
+      - name: grpc-server
+        image: jossvan/grpcserver
+        ports:
+        - containerPort: 50051
+---
+# Service tipo ClusterIp
+apiVersion: v1
+kind: Service
+metadata:
+  name: grpcserver-service
+  namespace: proyect
+  labels:
+    app: grpc-server
+spec:
+  type: ClusterIP
+  ports:
+    - port: 50051 # escuchando internamente en el cluster
+      targetPort: 50051
+      protocol: TCP
+  selector:
+    app: grpc-server
