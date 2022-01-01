@@ -1,0 +1,106 @@
+# Deployment y service del backend
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: backend
+  name: backend
+  namespace: proyect
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - image: cifgt3/grupo16-backend
+        imagePullPolicy: Always
+        name: backend
+        ports:
+        - containerPort: 8080
+--- 
+# servicio del backend, tipo clusterip
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: proyect
+  labels:
+    app: backend
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: backend
+---
+# Frontend deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+  namespace: proyect
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - image: cifgt3/grupo16-frontend
+        imagePullPolicy: Always
+        name: frontend
+        ports:
+        - containerPort: 80
+---
+# service del frontend
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: proyect
+  labels:
+    app: frontend
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: frontend
+---
+# regla de ingress controller
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-front
+  namespace: proyect
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet:
+      proxy_set_header l5d-dst-override $service_name.$namespace.svc.cluster.local:$service_port;
+      grpc_set_header l5d-dst-override $service_name.$namespace.svc.cluster.local:$service_port;
+    nginx.ingress.kubernetes.io/websocket-services: "backend"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: frontend.grupo16-proyecto2-vacas-2021.tk
+      http:
+        paths:
+          - backend:
+              service:
+                name: frontend
+                port: 
+                  number: 80
+            path: /
+            pathType: Prefix

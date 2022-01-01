@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -22,7 +21,7 @@ import { LocationComponent } from './components/location/location.component'
 
 
 // se agrega la configuracion del socket io, como url se envia el socket-server que envia/recibe informacion
-const config: SocketIoConfig = { url:"application-service:8080", options: {}}
+const config: SocketIoConfig = { url:"backend:8080", options: {}}
 
 @NgModule({
   declarations: [
