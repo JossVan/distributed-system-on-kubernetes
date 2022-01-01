@@ -12,7 +12,7 @@ app.use(cors())
 
 const ios = require('socket.io')(http, {
   cors: {
-    origins: [config.HOST+":4200"] //ruta del frontend
+    origin: '*'//ruta del frontend
   }
 });
 

@@ -7,7 +7,8 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 RUN npm install
-RUN apt update && apt install -y iputils-ping
+#RUN apt update && apt install -y iputils-ping
+RUN apk update && apk add bash && apk add iputils
 COPY . .
 
 EXPOSE 8080
