@@ -26,7 +26,6 @@ const config: SocketIoConfig = { url:"34.125.209.246:32523", options:{
   transports: ['polling','websocket'] 
 } }
 
-
 @NgModule({
   declarations: [
     AppComponent,
