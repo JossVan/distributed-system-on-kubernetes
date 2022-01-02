@@ -102,7 +102,7 @@ export class WebsocketService{
         this.socket.on('result6', (data:JSON) => {
           observer.next(data)
         })
-
+        /*
         this.socket.on('disconnect', ()=>{
           observer.complete()
         })
@@ -114,6 +114,7 @@ export class WebsocketService{
         this.socket.on('connect_error', (e:any)=>{
           observer.error(e)
         })
+        */
 
       } catch (error) {
         observer.error(error)

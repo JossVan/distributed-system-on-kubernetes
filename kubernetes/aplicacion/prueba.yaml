@@ -17,7 +17,7 @@ spec:
         app: backend
     spec:
       containers:
-      - image: jossvan/backend
+      - image: cifgt3/grupo16-backend
         imagePullPolicy: Always
         name: backend
         ports:
@@ -58,7 +58,7 @@ spec:
         app: frontend
     spec:
       containers:
-      - image: jossvan/frontend
+      - image: cifgt3/grupo16-frontend
         imagePullPolicy: Always
         name: frontend
         ports:
@@ -87,6 +87,7 @@ metadata:
   name: frontend-ingress
   annotations: 
     nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.org/websocket-services: "ws-svc"
     nginx.ingress.kubernetes.io/cors-allow-origin: "*"
     nginx.ingress.kubernetes.io/proxy-body-size: "100m"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
