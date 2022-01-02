@@ -21,8 +21,11 @@ import { LocationComponent } from './components/location/location.component'
 
 
 // se agrega la configuracion del socket io, como url se envia el socket-server que envia/recibe informacion
-// backend.grupo16-proyecto2-vacas-2021.tk:8080
-const config: SocketIoConfig = { url:"/socket.io", options: {}}
+// backend.grupo16-proyecto2-vacas-2021.tk:8080      8080
+const config: SocketIoConfig = { url:"34.125.209.246:32523", options:{
+  transports: ['polling','websocket'] 
+} }
+
 
 @NgModule({
   declarations: [

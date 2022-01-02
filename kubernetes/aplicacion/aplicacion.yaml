@@ -1,43 +1,53 @@
-# Deployment
+# Deployment y service del backend
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
-  namespace: proyect
   labels:
-    app: frontend
+    app: backend-front
+  name: backend-front
+  namespace: proyect
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: frontend
+      app: backend-front
   template:
     metadata:
-      annotations:
-        linkerd.io/inject: enabled
       labels:
-        app: frontend
+        app: backend-front
     spec:
       containers:
-      - name: frontend
-        image: jossvan/frontend
+      - image: cifgt3/grupo16-backend
+        imagePullPolicy: Always
+        name: backend
         ports:
-        - containerPort: 4200
-
+        - containerPort: 8080
+      - image: cifgt3/grupo16-frontend
+        imagePullPolicy: Always
+        name: frontend
+        ports:
+        - containerPort: 80
 ---
-# Service tipo ClusterIp
+# servicio
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-service
-  namespace: proyect
   labels:
-    app: frontend
+    app: backend-front
+  name: backend-front
+  namespace: proyect
 spec:
-  type: ClusterIP
   ports:
-    - port: 4200 
-      targetPort: 4200
-      protocol: TCP
+  - nodePort: 32522
+    port: 80
+    protocol: TCP
+    targetPort: 80
+    name: uno
+  - nodePort: 32523
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+    name: dos
   selector:
-    app: frontend
+    app: backend-front
+  type: NodePort

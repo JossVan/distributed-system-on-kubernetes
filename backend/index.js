@@ -12,8 +12,7 @@ app.use(cors())
 
 const ios = require('socket.io')(http, {
   cors: {
-    //origins: ['frontend.grupo16-proyecto2-vacas-2021.tk:80']//ruta del frontend
-    origin: '*'
+    origins: ['34.125.209.246:32522']//ruta del frontend
   }
 });
 
