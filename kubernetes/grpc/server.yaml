@@ -22,7 +22,7 @@ spec:
       - name: grpc-server
         image: jossvan/grpcserver
         ports:
-        - containerPort: 50051
+        - containerPort: 5001
 ---
 # Service tipo ClusterIp
 apiVersion: v1
@@ -35,8 +35,8 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: 50051 # escuchando internamente en el cluster
-      targetPort: 50051
+    - port: 5001 # escuchando internamente en el cluster
+      targetPort: 5001
       protocol: TCP
   selector:
     app: grpc-server
